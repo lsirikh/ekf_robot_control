@@ -93,7 +93,8 @@ void Interface::fuseData(){
 
 void Interface::publishOdometry(Eigen::VectorXd states){
     nav_msgs::msg::Odometry odometry;
-    odometry.header.frame_id = "map";
+    //odometry.header.frame_id = "map";
+    odometry.header.frame_id = "odom";  // map -> odom
     odometry.header.stamp = this->now();
     odometry.child_frame_id = "base_link";
     odometry.pose.pose.position.x = states[0];
@@ -133,44 +134,45 @@ void Interface::publishOdometry(Eigen::VectorXd states){
 void Interface::publishTransform(Eigen::VectorXd state){
     geometry_msgs::msg::TransformStamped transformStamped;
     transformStamped.header.stamp = this->now();
-    transformStamped.header.frame_id = "map";
+    //transformStamped.header.frame_id = "map";
+    transformStamped.header.frame_id = "odom";  // map -> odom
     transformStamped.child_frame_id = "base_link";
     transformStamped.transform.translation.x = state(0);
     transformStamped.transform.translation.y = state(1);
     transformStamped.transform.translation.z = state(2);
     tf2::Quaternion q;
-    q.setRPY(state(3), state(4), state(5));
+    q.setRPY(state(3), state(4), state(5)+ M_PI);
     transformStamped.transform.rotation.x = q.x();
     transformStamped.transform.rotation.y = q.y();
     transformStamped.transform.rotation.z = q.z();
     transformStamped.transform.rotation.w = q.w();
     tf_broadcaster_->sendTransform(transformStamped);
 
-    // base_link to base_footprint transform
-    transformStamped.header.stamp = this->now();
-    transformStamped.header.frame_id = "base_link";
-    transformStamped.child_frame_id = "base_footprint";
-    transformStamped.transform.translation.x = 0;
-    transformStamped.transform.translation.y = 0;
-    transformStamped.transform.translation.z = 0;
-    tf2::Quaternion q_base_footprint(0, 0, 0, 1);
-    transformStamped.transform.rotation.x = q_base_footprint.x();
-    transformStamped.transform.rotation.y = q_base_footprint.y();
-    transformStamped.transform.rotation.z = q_base_footprint.z();
-    transformStamped.transform.rotation.w = q_base_footprint.w();
-    tf_broadcaster_->sendTransform(transformStamped);
+    // // base_link to base_footprint transform
+    // transformStamped.header.stamp = this->now();
+    // transformStamped.header.frame_id = "base_link";
+    // transformStamped.child_frame_id = "base_footprint";
+    // transformStamped.transform.translation.x = 0;
+    // transformStamped.transform.translation.y = 0;
+    // transformStamped.transform.translation.z = 0;
+    // tf2::Quaternion q_base_footprint(0, 0, 0, 1);
+    // transformStamped.transform.rotation.x = q_base_footprint.x();
+    // transformStamped.transform.rotation.y = q_base_footprint.y();
+    // transformStamped.transform.rotation.z = q_base_footprint.z();
+    // transformStamped.transform.rotation.w = q_base_footprint.w();
+    // tf_broadcaster_->sendTransform(transformStamped);
 
-    // base_link to laser transform
-    transformStamped.header.stamp = this->now();
-    transformStamped.header.frame_id = "base_link";
-    transformStamped.child_frame_id = "laser";
-    transformStamped.transform.translation.x = 0.0; // Adjust according to your robot's configuration
-    transformStamped.transform.translation.y = 0;
-    transformStamped.transform.translation.z = 0.1; // Adjust according to your robot's configuration
-    tf2::Quaternion q_laser(0, 0, 0, 1);
-    transformStamped.transform.rotation.x = q_laser.x();
-    transformStamped.transform.rotation.y = q_laser.y();
-    transformStamped.transform.rotation.z = q_laser.z();
-    transformStamped.transform.rotation.w = q_laser.w();
-    tf_broadcaster_->sendTransform(transformStamped);
+    // // base_link to laser transform
+    // transformStamped.header.stamp = this->now();
+    // transformStamped.header.frame_id = "base_link";
+    // transformStamped.child_frame_id = "laser";
+    // transformStamped.transform.translation.x = 0.0; // Adjust according to your robot's configuration
+    // transformStamped.transform.translation.y = 0;
+    // transformStamped.transform.translation.z = 0.1; // Adjust according to your robot's configuration
+    // tf2::Quaternion q_laser(0, 0, 0, 1);
+    // transformStamped.transform.rotation.x = q_laser.x();
+    // transformStamped.transform.rotation.y = q_laser.y();
+    // transformStamped.transform.rotation.z = q_laser.z();
+    // transformStamped.transform.rotation.w = q_laser.w();
+    // tf_broadcaster_->sendTransform(transformStamped);
 }

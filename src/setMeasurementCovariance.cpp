@@ -12,7 +12,8 @@ SetMeasurementCovariance::~SetMeasurementCovariance(){
 
 void SetMeasurementCovariance::odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg){
   odomData_ = *msg;
-  odomData_.header.frame_id = "map";
+  //odomData_.header.frame_id = "map";
+  odomData_.header.frame_id = "odom";
   odomData_.pose.covariance[0] = 1e-3;     // x
   odomData_.pose.covariance[7] = 1e-3;     // y
   odomData_.pose.covariance[14] = 1e-300;  // z
