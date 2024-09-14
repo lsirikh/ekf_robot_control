@@ -44,14 +44,14 @@ class Interface : public rclcpp::Node
             0, 0, 0, // x y z
             0, 0, 0, // r p y 
             0, 0, 0, // vx vy vz
-            0, 0, 1, // vx vy vz
-            1, 1, 1  // ax ay az
+            0, 0, 1, // vr vp vy
+            1, 1, 0  // ax ay az
         };  // x y z r p y vx vy vz vr vp vy ax ay az
         std::vector<int> dataOdometry = 
         {
             1, 1, 0, // x y z
             0, 0, 1, // r p y 
-            0, 0, 0, // vx vy vz
+            1, 1, 0, // vx vy vz
             0, 0, 0, // vr vp vy
             0, 0, 0  // ax ay az
         }; // x y z r p y vx vy vz vr vp vy ax ay az

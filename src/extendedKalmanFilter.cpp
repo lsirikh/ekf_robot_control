@@ -31,6 +31,7 @@ void ExtendedKalmanFilter::setInitialErrorEstimateCovariance(){
 
 void ExtendedKalmanFilter::setProcessNoiseCovariance(){
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Set Process Noise Covariance Matrix");
+    processNoiseCovariance_.setIdentity();  // Process Noise를 Identity로 설정하고
     processNoiseCovariance_(StateMemberX, StateMemberX) = 0.01;
     processNoiseCovariance_(StateMemberY, StateMemberY) = 0.01;
     processNoiseCovariance_(StateMemberZ, StateMemberZ) = 0.01;
@@ -301,7 +302,7 @@ void ExtendedKalmanFilter::correct(Measurement &measurement){
     resetAngleOverflow();
 }
 
-void ExtendedKalmanFilter::resetAngleOverflow() {
+void ExtendedKalmanFilter:: resetAngleOverflow() {
     state_(StateMemberRoll)  = clamp(state_(StateMemberRoll));
     state_(StateMemberPitch) = clamp(state_(StateMemberPitch));
     state_(StateMemberYaw)   = clamp(state_(StateMemberYaw));

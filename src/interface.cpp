@@ -17,8 +17,8 @@ void Interface::callbackIMU(const sensor_msgs::msg::Imu::SharedPtr msg){
     measurement.setZero();
     measurementCovariance.setZero();
     data_.getAccelerationMeasurement(*msg, ekf_, measurement, measurementCovariance, twoDimensionalMode);
-    
-    // Log IMU measurements and covariances
+
+    // // Log IMU measurements and covariances
     // RCLCPP_INFO(this->get_logger(), "IMU Measurements: [x: %f, y: %f, z: %f, roll: %f, pitch: %f, yaw: %f, vx: %f, vy: %f, vz: %f, vroll: %f, vpitch: %f, vyaw: %f, ax: %f, ay: %f, az: %f]",
     //             measurement[0], measurement[1], measurement[2], measurement[3], measurement[4], measurement[5],
     //             measurement[6], measurement[7], measurement[8], measurement[9], measurement[10], measurement[11],
@@ -39,7 +39,7 @@ void Interface::callbackOdometry(const nav_msgs::msg::Odometry::SharedPtr msg){
     measurementCovariance.setZero();
     data_.getOdometryMeasurement(*msg, ekf_, measurement, measurementCovariance, twoDimensionalMode);
 
-    // Log Odometry measurements and covariances
+    // // Log Odometry measurements and covariances
     // RCLCPP_INFO(this->get_logger(), "Odometry Measurements: [x: %f, y: %f, z: %f, roll: %f, pitch: %f, yaw: %f, vx: %f, vy: %f, vz: %f, vroll: %f, vpitch: %f, vyaw: %f, ax: %f, ay: %f, az: %f]",
     //             measurement[0], measurement[1], measurement[2], measurement[3], measurement[4], measurement[5],
     //             measurement[6], measurement[7], measurement[8], measurement[9], measurement[10], measurement[11],
